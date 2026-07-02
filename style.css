@@ -1,0 +1,287 @@
+/* ==========================================================================
+   UN ARBRE, UN TEMPS — feuille de style
+   --------------------------------------------------------------------------
+   Direction artistique : aquarelle douce, carnet de voyage, livre illustré.
+   Palette désaturée (verts naturels, ocres, bruns doux), aucune couleur vive,
+   aucun élément d'interface visible (pas de bouton, pas de barre, pas de nav).
+   ========================================================================== */
+
+/* ---------- Jetons de design (couleurs, typographies, durées) ---------- */
+:root {
+  /* Couleur de secours si aucune image de fond n'est encore chargée */
+  --parchemin: #ece3d1;
+
+  /* Palette texte */
+  --brun-doux: #4a3c2c;
+  --texte-principal: rgba(58, 46, 32, 0.82);
+  --texte-discret: rgba(58, 46, 32, 0.55);
+
+  /* Palette nature (utilisée pour les particules et petites touches) */
+  --vert-naturel: #6e7b58;
+  --ocre: #b98a52;
+  --brume: #cfc7b3;
+
+  /* Typographies */
+  --police-corps: 'EB Garamond', 'Georgia', serif;
+  --police-manuscrite: 'Caveat', cursive;
+
+  /* Rythme des transitions — tout est lent, rien n'est brusque */
+  --duree-saison: 3.5s;
+  --duree-apparition: 2.4s;
+}
+
+/* ---------- Réinitialisation minimale ---------- */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* la scène occupe tout l'écran, pas de défilement */
+  background: var(--parchemin);
+  font-family: var(--police-corps);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* Empêche la sélection de texte et le zoom accidentel : on regarde une
+   peinture, on ne manipule pas une interface. */
+body {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ==========================================================================
+   SCÈNE PRINCIPALE
+   ========================================================================== */
+
+#scene {
+  position: relative;
+  width: 100vw;
+  height: 100dvh; /* tient compte des barres mobiles (iOS/Android) */
+  overflow: hidden;
+}
+
+/* ---------- Fonds saisonniers (deux calques pour le fondu croisé) ---------- */
+.fond-saison {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 60%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity var(--duree-saison) ease;
+  will-change: opacity;
+
+  /* Respiration très lente, à peine perceptible : la scène est vivante */
+  animation: respirer 40s ease-in-out infinite alternate;
+}
+
+#fond-a { z-index: 1; }
+#fond-b { z-index: 2; }
+
+@keyframes respirer {
+  from { transform: scale(1); }
+  to   { transform: scale(1.035); }
+}
+
+/* ==========================================================================
+   L'ARBRE
+   ========================================================================== */
+
+.conteneur-arbre {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  transform: translateX(-50%);
+  z-index: 5;
+  height: min(78vh, 820px);
+  width: min(70vw, 620px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.arbre {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: bottom;
+
+  opacity: 0;
+  transform: translateY(14px);
+  filter: drop-shadow(0 18px 22px rgba(40, 30, 15, 0.16));
+
+  /* Très léger balancement, comme une brise — l'arbre respire */
+  transform-origin: 50% 100%;
+  animation: bercer 9s ease-in-out infinite alternate;
+}
+
+.arbre-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--duree-apparition) ease, transform var(--duree-apparition) ease;
+}
+
+@keyframes bercer {
+  from { rotate: -0.6deg; }
+  to   { rotate: 0.6deg; }
+}
+
+/* Ombre douce au pied de l'arbre, pour l'ancrer dans le sol */
+.ombre-arbre {
+  position: absolute;
+  left: 50%;
+  bottom: 2%;
+  width: 46%;
+  height: 5%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(40, 30, 15, 0.22) 0%, rgba(40, 30, 15, 0) 72%);
+  filter: blur(2px);
+  z-index: 4;
+}
+
+/* ==========================================================================
+   PARTICULES SAISONNIÈRES
+   ========================================================================== */
+
+#particules {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   VOILE PAPIER — grain + vignette, pour l'aspect « peinture / carnet »
+   ========================================================================== */
+
+.voile-papier {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.voile-papier::before {
+  /* Vignette : assombrit très légèrement les bords, comme un cadre peint */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(30, 22, 12, 0) 45%,
+    rgba(30, 22, 12, 0.16) 100%
+  );
+}
+
+.voile-papier::after {
+  /* Grain de papier, très discret, en superposition */
+  content: '';
+  position: absolute;
+  inset: -10%;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.9 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+}
+
+/* ==========================================================================
+   TEXTES DISCRETS
+   ========================================================================== */
+
+.phrase-poetique {
+  position: absolute;
+  left: 50%;
+  top: 9%;
+  transform: translate(-50%, -6px);
+  z-index: 9;
+  margin: 0;
+  max-width: min(84vw, 520px);
+  text-align: center;
+
+  font-family: var(--police-manuscrite);
+  font-size: clamp(1.3rem, 4.2vw, 1.9rem);
+  color: var(--texte-principal);
+  line-height: 1.35;
+
+  opacity: 0;
+  transition: opacity 2.6s ease, transform 2.6s ease;
+}
+
+.phrase-poetique.visible {
+  opacity: 0.85;
+  transform: translate(-50%, 0);
+}
+
+.age-arbre {
+  position: absolute;
+  right: 5.5%;
+  bottom: 4.5%;
+  z-index: 9;
+  margin: 0;
+
+  font-family: var(--police-corps);
+  font-style: italic;
+  font-size: clamp(0.72rem, 2.1vw, 0.85rem);
+  letter-spacing: 0.04em;
+  color: var(--texte-discret);
+
+  opacity: 0;
+  transition: opacity 2.6s ease;
+}
+
+.age-arbre.visible {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   RESPONSIVE — priorité au mobile (usage principal via tag NFC)
+   ========================================================================== */
+
+@media (max-width: 480px) {
+  .conteneur-arbre {
+    width: 82vw;
+    bottom: 8%;
+  }
+  .phrase-poetique {
+    top: 8%;
+  }
+}
+
+/* Orientation paysage sur petit écran : l'arbre reste lisible sans être écrasé */
+@media (max-height: 480px) and (orientation: landscape) {
+  .conteneur-arbre {
+    height: 88vh;
+    width: 38vw;
+  }
+  .phrase-poetique {
+    top: 6%;
+    font-size: clamp(1.1rem, 3.4vh, 1.5rem);
+  }
+  .age-arbre {
+    bottom: 3%;
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITÉ — préférence de mouvement réduit
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .fond-saison,
+  .arbre {
+    animation: none !important;
+  }
+  .arbre-visible,
+  .phrase-poetique,
+  .age-arbre {
+    transition-duration: 0.4s !important;
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "_note": "Ce fichier est la seule chose à éditer pour changer les textes du site. Aucune connaissance en code n'est nécessaire : modifiez le texte entre guillemets, enregistrez, republiez. Le nom 'video.json' est conservé tel que demandé dans le brief initial ; il peut être renommé librement du moment que la constante FICHIER_TEXTES dans script.js est mise à jour en conséquence.",
+
+  "afficherAge": true,
+
+  "utiliserPhraseParSaison": false,
+
+  "phraseUnique": "Chaque jour, un peu plus haut vers le ciel.",
+
+  "phrasesParSaison": {
+    "winter": [
+      "L'arbre dort, mais il n'oublie rien.",
+      "Sous le silence blanc, tout continue de grandir."
+    ],
+    "spring": [
+      "Ce qui semblait immobile s'éveille.",
+      "Les premières pousses portent toutes les saisons passées."
+    ],
+    "summer": [
+      "La lumière s'attarde, comme le temps qu'on voudrait garder.",
+      "À l'ombre de ses branches, rien ne presse."
+    ],
+    "autumn": [
+      "Chaque feuille qui tombe a d'abord été une pousse.",
+      "Le temps ne se perd pas, il se dépose."
+    ]
+  }
+}

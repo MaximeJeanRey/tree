@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+
+  <!-- Pas de nom d'application technique : un titre discret, poétique -->
+  <title>Un arbre, un temps</title>
+  <meta name="description" content="Un arbre qui grandit avec le temps.">
+  <meta name="theme-color" content="#e7dfcd">
+
+  <!-- Favicon minimal (facultatif — peut être remplacé par une icône aquarelle) -->
+  <link rel="icon" href="data:,">
+
+  <!-- Deux polices seulement : une serif discrète pour le texte, une manuscrite pour la phrase -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!--
+    Scène unique. Aucun header, aucun menu, aucun bouton.
+    Tout tient dans cette scène : c'est volontaire.
+  -->
+  <main id="scene" aria-label="Un arbre qui grandit avec le temps, dans le paysage de la saison actuelle">
+
+    <!-- Deux calques de fond superposés pour permettre un fondu doux entre saisons -->
+    <div class="fond-saison" id="fond-a"></div>
+    <div class="fond-saison" id="fond-b"></div>
+
+    <!-- Particules saisonnières discrètes (neige, pollen, lucioles, feuilles...) -->
+    <canvas id="particules" aria-hidden="true"></canvas>
+
+    <!-- Voile papier : grain + vignette, pour l'impression de peinture / carnet -->
+    <div class="voile-papier" aria-hidden="true"></div>
+
+    <!-- L'arbre -->
+    <div class="conteneur-arbre">
+      <div class="ombre-arbre" aria-hidden="true"></div>
+      <img id="arbre" class="arbre" src="" alt="" draggable="false">
+    </div>
+
+    <!-- Mentions discrètes -->
+    <p id="phrase-poetique" class="phrase-poetique"></p>
+    <p id="age-arbre" class="age-arbre"></p>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
